@@ -5,8 +5,22 @@ import javafx.scene.control.MenuItem;
 
 public class MainApplicationController {
     @FXML
-    private MenuItem elegirDestinoMItem;
+    protected void elegirDestinoAP() {
+        System.out.println("TODO: escribir función para el menu item elegirDestino");
+    }
 
     @FXML
-    protected void elegirDestinoAP() { elegirDestinoMItem.setText("FUNCIONÓ!!"); }
+    protected void guardarAP() {
+        System.out.println("TODO: escribir función para el item guardar");
+    }
+
+    @FXML
+    protected void guardarGenerarAP() {
+        System.out.println("TODO: escribir función para el menu item guardarYGenerar");
+    }
+
+    @FXML
+    protected void colorAP() {
+        System.out.println("TODO: escribir función para el menu item color");
+    }
 }

@@ -3,21 +3,32 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane fx:controller="com.presupuestos.presupuestos2.MainApplicationController" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="500.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MenuBar layoutY="1.0" prefHeight="45.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+      <MenuBar layoutY="1.0" prefHeight="45.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="Guardar">
               <items>
-                  <MenuItem fx:id="elegirDestinoMItem" onAction="#elegirDestinoAP" mnemonicParsing="false" text="Elegir destino" />
-                <MenuItem mnemonicParsing="false" text="Guardar" />
-                  <MenuItem mnemonicParsing="false" text="Guardar y generar Presupuesto" />
+                  <MenuItem mnemonicParsing="false" onAction="#elegirDestinoAP" text="Elegir destino" />
+                <MenuItem mnemonicParsing="false" onAction="#guardarAP" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#guardarGenerarAP" text="Guardar y generar Presupuesto" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Opciones">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#colorAP" text="Color" />
               </items>
             </Menu>
          </menus>
       </MenuBar>
+      <TableView layoutX="14.0" layoutY="123.0" prefHeight="477.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="123.0">
+        <columns>
+          <TableColumn prefWidth="799.2000122070312" sortable="false" text="Trabajo" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
