@@ -1,7 +1,6 @@
-package com.presupuestos.presupuestos2;
+package com.presupuestos2.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
 
 public class MainApplicationController {
     @FXML
