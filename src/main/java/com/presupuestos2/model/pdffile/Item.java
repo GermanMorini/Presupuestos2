@@ -1,4 +1,4 @@
-package com.presupuestos2.model;
+package com.presupuestos2.model.pdffile;
 
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;

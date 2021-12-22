@@ -9,4 +9,6 @@ module com.presupuestos2 {
 
     opens com.presupuestos2 to javafx.fxml;
     exports com.presupuestos2;
+    opens com.presupuestos2.controller to javafx.fxml;
+    exports com.presupuestos2.controller;
 }

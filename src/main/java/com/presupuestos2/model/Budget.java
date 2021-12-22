@@ -1,20 +1,14 @@
 package com.presupuestos2.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
-public class PDF implements Serializable {
+public class Budget implements Serializable {
 
     private String cliente, fecha, total;
     private String[] trabajos, detalles;
 
-    public PDF(String cliente, String fecha, String total, String[] trabajos) {
-        this.cliente = cliente;
-        this.fecha = fecha;
-        this.total = total;
-        this.trabajos = trabajos;
-    }
-
-    public PDF(String cliente, String fecha, String total, String[] trabajos, String[] detalles) {
+    public Budget(String cliente, String fecha, String total, String[] trabajos, String[] detalles) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.total = total;
@@ -60,5 +54,16 @@ public class PDF implements Serializable {
 
     public void setDetalles(String[] detalles) {
         this.detalles = detalles;
+    }
+
+    @Override
+    public String toString() {
+        return "Budget{" +
+                "cliente='" + cliente + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", total='" + total + '\'' +
+                ", trabajos=" + Arrays.toString(trabajos) +
+                ", detalles=" + Arrays.toString(detalles) +
+                '}';
     }
 }

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -64,8 +66,8 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <DatePicker prefHeight="40.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField prefHeight="38.0" prefWidth="215.0" GridPane.columnIndex="1" />
+            <DatePicker fx:id="fecha" prefHeight="40.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="cliente" prefHeight="38.0" prefWidth="215.0" GridPane.columnIndex="1" />
             <Label text="Total:" GridPane.columnIndex="2">
                <padding>
                   <Insets left="15.0" />
@@ -74,35 +76,60 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField prefHeight="38.0" prefWidth="248.0" GridPane.columnIndex="3" />
+            <TextField fx:id="total" prefHeight="38.0" prefWidth="248.0" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <VBox layoutX="14.0" layoutY="121.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
-         <children>
-            <Label prefHeight="26.0" prefWidth="146.0" text="Trabajos:">
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="table1" prefHeight="34.0" prefWidth="760.0" />
-            <TextField fx:id="table2" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table3" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table4" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table5" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table6" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table7" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table8" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table9" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table10" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table11" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table12" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table13" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table14" prefHeight="34.0" prefWidth="800.0" />
-            <TextField fx:id="table15" prefHeight="34.0" prefWidth="800.0" />
-         </children>
-      </VBox>
+      <TabPane layoutX="20.0" layoutY="120.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
+         <tabs>
+            <Tab closable="false" text="Trabajos">
+               <content>
+                  <VBox fx:id="trabajosTable" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TextField fx:id="trabajo1" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo2" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo3" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo4" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo5" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo6" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo7" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo8" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo9" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo10" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo11" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo12" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo13" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo14" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo15" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo16" prefHeight="34.0" prefWidth="760.0" />
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Detalles">
+                <content>
+                  <VBox fx:id="detallesTable" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TextField fx:id="detalle1" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle2" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle3" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle4" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle5" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle6" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle7" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle8" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle9" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle10" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle11" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle12" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle13" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle14" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle15" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle16" prefHeight="34.0" prefWidth="760.0" />
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

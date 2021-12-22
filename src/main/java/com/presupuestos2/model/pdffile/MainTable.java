@@ -4,7 +4,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.presupuestos2.model.Item;
 
 public class MainTable extends PdfPTable {
 
