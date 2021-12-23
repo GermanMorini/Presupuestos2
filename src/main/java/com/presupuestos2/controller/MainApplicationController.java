@@ -1,7 +1,9 @@
 package com.presupuestos2.controller;
 
+import com.itextpdf.text.DocumentException;
 import com.presupuestos2.MainApplication;
 import com.presupuestos2.model.Budget;
+import com.presupuestos2.model.other.Stream;
 import com.presupuestos2.model.other.Utilities;
 import com.presupuestos2.model.pdffile.Img;
 import com.presupuestos2.model.pdffile.MainTable;
@@ -15,8 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public class MainApplicationController {
     private VBox trabajosTable;
     @FXML
     private VBox detallesTable;
+
     @FXML
     protected void elegirDestinoAP() {
         DirectoryChooser dc = new DirectoryChooser();
@@ -48,68 +50,73 @@ public class MainApplicationController {
 
     @FXML
     protected void guardarAP() {
-        if (validateEntries()) {
-            String[] trabajos = getTableContent(trabajosTable);
-            String[] detalles = getTableContent(detallesTable);
-            String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pspto";
+        saveBudgetInfoIfAllFieldsCompleted();
+    }
 
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savePath)))
-            {
-                oos.writeObject(new Budget(
-                        cliente.getText().strip(),
-                        fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
-                        total.getText().strip(),
-                        trabajos,
-                        detalles));
-                Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "Datos guardados con éxito en " + savePath, "Información");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
-            }
+    private void saveBudgetInfoIfAllFieldsCompleted() {
+        if (allFieldsCompleted()) {
+            String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pspto";
+            Budget presupuesto = new Budget(
+                    cliente.getText().strip(),
+                    fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
+                    total.getText().strip(),
+                    getTableContent(trabajosTable),
+                    getTableContent(detallesTable)
+            );
+            Stream.writeObject(presupuesto, savePath);
         } else {
             Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
         }
     }
 
     @FXML
+    protected void cargarAP() {
+        // TODO: añadir funcionalidad
+        //Budget presupuesto = Stream.readObject();
+    }
+
+    @FXML
     protected void guardarGenerarAP() {
         guardarAP();
+        String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pdf";
 
-        if (validateEntries()) {
-            String[] trabajos = getTableContent(trabajosTable);
-            String[] detalles = getTableContent(detallesTable);
-            String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pdf";
+        try {
+            createFileIfAllFieldsCompleted(savePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error durante la generación del archivo PDF\nSi el mismo persiste contactar al servicio de ayuda", "Error");
+        }
+    }
 
-            try {
-                new PDFDocument(
-                        savePath,
-                        new Img(MainApplication.class.getResource("MarceloDiaz.png").getPath()).getImg(),
-                        new MainTable(
-                                cliente.getText().strip(),
-                                fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
-                                total.getText().strip(),
-                                trabajos,
-                                detalles)
-                        );
-                Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "PDF generado con éxito en " + savePath, "Información");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
-            }
+    private void createFileIfAllFieldsCompleted(String savePath) throws DocumentException, FileNotFoundException {
+        if (allFieldsCompleted()) {
+            PDFDocument pdf = new PDFDocument(savePath);
+            pdf.createBudget(
+                    new Img(MainApplication.class.getResource("MarceloDiaz.png").getPath()).getImg(),
+                    new MainTable(
+                            cliente.getText().strip(),
+                            fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
+                            total.getText().strip(),
+                            getTableContent(trabajosTable),
+                            getTableContent(detallesTable))
+            );
+            Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "PDF generado con éxito en " + savePath, "Información");
         } else {
             Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
         }
     }
 
-    private boolean validateEntries() {
-        return cliente.getText() != null && fecha.getValue() != null &&
-                total.getText() != null && getTableContent(trabajosTable).length != 0;
+    private boolean allFieldsCompleted() {
+        return cliente.getText() != null && !cliente.getText().isBlank() &&
+               total.getText() != null && !total.getText().isBlank() &&
+               getTableContent(trabajosTable).length != 0 &&
+               fecha.getValue() != null;
     }
 
     private String[] getTableContent(Pane table) {
         ArrayList<String> list = new ArrayList<>();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < table.getChildren().size(); i++) {
             TextField tf = (TextField) table.getChildren().get(i);
             if (tf.getText() != null && !tf.getText().isBlank()) {
                 list.add(tf.getText().strip());

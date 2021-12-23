@@ -29,7 +29,7 @@ public class MainTable extends PdfPTable {
         content.addElement(new InputText("Fecha", fecha, FONT.getFamilyname(), (int) FONT.getSize(), SPACING));
         content.addElement(new Text("Trabajos:", FONT.getFamilyname(), (int) FONT.getSize(), Font.UNDERLINE, SPACING, ALIGN_LEFT));
         addList(trabajos);
-        if (detalles != null) {
+        if (!(detalles.length == 0)) {
             content.addElement(new Text("Detalles:", FONT.getFamilyname(), (int) FONT.getSize(), Font.UNDERLINE, SPACING, ALIGN_LEFT));
             addList(detalles);
         }

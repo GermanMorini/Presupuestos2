@@ -5,20 +5,20 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
-public class PDFDocument {
 
-    public PDFDocument(String savePath, Image img, MainTable table) throws IOException, DocumentException {
-        Document doc = new Document();
-        PdfWriter.getInstance(doc, new FileOutputStream(savePath));
+public class PDFDocument extends Document {
 
-        doc.open();
+    public PDFDocument(String savePath) throws FileNotFoundException, DocumentException {
+        PdfWriter.getInstance(this, new FileOutputStream(savePath));
+    }
 
-        doc.add(img);
-        doc.add(table);
-
-        doc.close();
+    public void createBudget(Image img, MainTable table) throws DocumentException {
+        open();
+        add(img);
+        add(table);
+        close();
     }
 }
