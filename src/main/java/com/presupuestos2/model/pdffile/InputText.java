@@ -10,9 +10,9 @@ public class InputText extends Paragraph {
         setSpacingBefore(spacing);
         setSpacingAfter(spacing);
         setIndentationLeft(10);
-        setFont(FontFactory.getFont(font, size + 2, Font.UNDERLINE));
-        add(title + ": ");
+        setFont(FontFactory.getFont(font, size, Font.UNDERLINE));
+        add(title);
         setFont(FontFactory.getFont(font, size, Font.NORMAL));
-        add(text);
+        add(": " + text);
     }
 }

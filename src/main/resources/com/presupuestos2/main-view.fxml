@@ -67,7 +67,10 @@
                </font>
             </Label>
             <DatePicker fx:id="fecha" prefHeight="40.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="cliente" prefHeight="38.0" prefWidth="215.0" GridPane.columnIndex="1" />
+            <TextField fx:id="cliente" prefHeight="38.0" prefWidth="215.0" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
             <Label text="Total:" GridPane.columnIndex="2">
                <padding>
                   <Insets left="15.0" />
@@ -76,7 +79,10 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="total" prefHeight="38.0" prefWidth="248.0" GridPane.columnIndex="3" />
+            <TextField fx:id="total" prefHeight="38.0" prefWidth="248.0" GridPane.columnIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
          </children>
       </GridPane>
       <TabPane layoutX="20.0" layoutY="120.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
@@ -85,22 +91,66 @@
                <content>
                   <VBox fx:id="trabajosTable" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TextField fx:id="trabajo1" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo2" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo3" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo4" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo5" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo6" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo7" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo8" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo9" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo10" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo11" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo12" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo13" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo14" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo15" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="trabajo16" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="trabajo1" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo2" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo3" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo4" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo5" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo6" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo7" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo8" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo9" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo10" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo11" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo12" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo13" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo14" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="trabajo15" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
                      </children>
                   </VBox>
                </content>
@@ -109,22 +159,66 @@
                 <content>
                   <VBox fx:id="detallesTable" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TextField fx:id="detalle1" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle2" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle3" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle4" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle5" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle6" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle7" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle8" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle9" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle10" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle11" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle12" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle13" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle14" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle15" prefHeight="34.0" prefWidth="760.0" />
-                        <TextField fx:id="detalle16" prefHeight="34.0" prefWidth="760.0" />
+                        <TextField fx:id="detalle1" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle2" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle3" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle4" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle5" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle6" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle7" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle8" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle9" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle10" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle11" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle12" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle13" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle14" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
+                        <TextField fx:id="detalle15" prefHeight="34.0" prefWidth="760.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font></TextField>
                      </children>
                   </VBox>
                </content>

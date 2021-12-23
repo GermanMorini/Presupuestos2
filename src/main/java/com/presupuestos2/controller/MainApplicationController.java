@@ -2,7 +2,12 @@ package com.presupuestos2.controller;
 
 import com.presupuestos2.MainApplication;
 import com.presupuestos2.model.Budget;
+import com.presupuestos2.model.other.Utilities;
+import com.presupuestos2.model.pdffile.Img;
+import com.presupuestos2.model.pdffile.MainTable;
+import com.presupuestos2.model.pdffile.PDFDocument;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -19,19 +24,14 @@ public class MainApplicationController {
 
     @FXML
     private TextField cliente;
-
     @FXML
     private DatePicker fecha;
-
     @FXML
     private TextField total;
-
     @FXML
     private VBox trabajosTable;
-
     @FXML
     private VBox detallesTable;
-
     @FXML
     protected void elegirDestinoAP() {
         DirectoryChooser dc = new DirectoryChooser();
@@ -40,9 +40,9 @@ public class MainApplicationController {
 
         if ((f = dc.showDialog(null)) != null) {
             MainApplication.setSavePath(f.getPath());
-            System.out.println("TODO: Dialog con la ruta seleccionada");
+            Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "El nuevo destino es " + f.getPath(), "Información");
         } else {
-            System.out.println("TODO: Dialog con la leyenda 'No se ha seleccionado ningún destino'");
+            Utilities.showPopupMessage(Alert.AlertType.WARNING, "No se ha seleccionado ninguna ruta.\nLa ruta de guardado no ha cambiado\n" + MainApplication.getSavePath(), "Advertencia");
         }
     }
 
@@ -55,14 +55,49 @@ public class MainApplicationController {
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savePath)))
             {
-                oos.writeObject(new Budget(cliente.getText().strip(), fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")), total.getText().strip(), trabajos, detalles));
-                System.out.println("TODO: Dialog con la leyenda 'PDF guardado con éxito en <savePath>' " + MainApplication.getSavePath());
+                oos.writeObject(new Budget(
+                        cliente.getText().strip(),
+                        fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
+                        total.getText().strip(),
+                        trabajos,
+                        detalles));
+                Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "Datos guardados con éxito en " + savePath, "Información");
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("TODO: Dialog con la leyenda 'Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda'");
+                Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
             }
         } else {
-            System.out.println("TODO: Dialog con la leyenda 'Faltan rellenar algunas entradas'");
+            Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
+        }
+    }
+
+    @FXML
+    protected void guardarGenerarAP() {
+        guardarAP();
+
+        if (validateEntries()) {
+            String[] trabajos = getTableContent(trabajosTable);
+            String[] detalles = getTableContent(detallesTable);
+            String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pdf";
+
+            try {
+                new PDFDocument(
+                        savePath,
+                        new Img(MainApplication.class.getResource("MarceloDiaz.png").getPath()).getImg(),
+                        new MainTable(
+                                cliente.getText().strip(),
+                                fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
+                                total.getText().strip(),
+                                trabajos,
+                                detalles)
+                        );
+                Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "PDF generado con éxito en " + savePath, "Información");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
+            }
+        } else {
+            Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
         }
     }
 
@@ -74,7 +109,7 @@ public class MainApplicationController {
     private String[] getTableContent(Pane table) {
         ArrayList<String> list = new ArrayList<>();
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 15; i++) {
             TextField tf = (TextField) table.getChildren().get(i);
             if (tf.getText() != null && !tf.getText().isBlank()) {
                 list.add(tf.getText().strip());
@@ -82,11 +117,6 @@ public class MainApplicationController {
         }
 
         return list.toArray(new String[] {});
-    }
-
-    @FXML
-    protected void guardarGenerarAP() {
-        System.out.println("TODO: escribir función para el menu item guardarYGenerar");
     }
 
     @FXML

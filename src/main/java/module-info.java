@@ -6,6 +6,7 @@ module com.presupuestos2 {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires itextpdf;
+    requires java.desktop;
 
     opens com.presupuestos2 to javafx.fxml;
     exports com.presupuestos2;
