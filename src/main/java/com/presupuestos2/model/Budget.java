@@ -1,14 +1,16 @@
 package com.presupuestos2.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Budget implements Serializable {
 
-    private String cliente, fecha, total;
+    private String cliente, total;
+    private LocalDate fecha;
     private String[] trabajos, detalles;
 
-    public Budget(String cliente, String fecha, String total, String[] trabajos, String[] detalles) {
+    public Budget(String cliente, LocalDate fecha, String total, String[] trabajos, String[] detalles) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.total = total;
@@ -24,11 +26,11 @@ public class Budget implements Serializable {
         this.cliente = cliente;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

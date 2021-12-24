@@ -12,7 +12,7 @@ public class Item extends Paragraph {
         setIndentationLeft(40);
         setFont(FontFactory.getFont(font, size + 2, Font.NORMAL));
         add(symbol + " ");
-        setFont(FontFactory.getFont(font, size, Font.NORMAL));
+        setFont(FontFactory.getFont(font, size - 2, Font.NORMAL));
         add(text);
     }
 }

@@ -1,10 +1,9 @@
 package com.presupuestos2.controller;
 
-import com.itextpdf.text.DocumentException;
 import com.presupuestos2.MainApplication;
 import com.presupuestos2.model.Budget;
 import com.presupuestos2.model.other.Stream;
-import com.presupuestos2.model.other.Utilities;
+import com.presupuestos2.model.other.Dialog;
 import com.presupuestos2.model.pdffile.Img;
 import com.presupuestos2.model.pdffile.MainTable;
 import com.presupuestos2.model.pdffile.PDFDocument;
@@ -35,67 +34,89 @@ public class MainApplicationController {
 
     @FXML
     protected void elegirDestinoAP() {
-        File f = Utilities.showDirectoryChooserDialog("Guardar en..");
+        File selectedDirectory = Dialog.showDirectoryChooserDialog("Guardar en..");
 
-        if (f != null) {
-            MainApplication.setSavePath(f.getPath());
-            Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "El nuevo destino es " + f.getPath(), "Información");
+        if (selectedDirectory != null) {
+            MainApplication.setSavePath(selectedDirectory.getPath());
+            Dialog.showMessageDialog(Alert.AlertType.INFORMATION, "El nuevo destino es " + selectedDirectory.getPath(), "Información");
         } else {
-            Utilities.showPopupMessage(Alert.AlertType.WARNING, "No se ha seleccionado ninguna ruta.\nLa ruta de guardado no ha cambiado\n" + MainApplication.getSavePath(), "Advertencia");
+            Dialog.showMessageDialog(Alert.AlertType.WARNING, "No se ha seleccionado ninguna ruta.\nLa ruta de guardado no ha cambiado\n" + MainApplication.getSavePath(), "Advertencia");
         }
     }
 
     @FXML
     protected void guardarAP() {
-        saveBudgetIfAllFieldsCompleted();
+        if (allFieldsCompleted()) {
+            //TODO: añadir el directorio guardados al proyecto
+            String savePath = "/home/german/" + cliente.getText().strip() + ".pspto";
+
+            generateBudget(savePath);
+        } else {
+            Dialog.showMessageDialog(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
+        }
     }
 
-    private void saveBudgetIfAllFieldsCompleted() {
-        if (allFieldsCompleted()) {
-            //TODO: crear directorio 'guardados'
-            //String savePath = getClass().getProtectionDomain().getCodeSource().getLocation() + File.separator + "Guardados" + File.separator + cliente.getText().strip() + ".pspto";
-            String savePath = "/home/german/" + cliente.getText().strip() + ".pspto";
+    private void generateBudget(String savePath) {
+        try {
             Budget presupuesto = new Budget(
                     cliente.getText().strip(),
-                    fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
+                    fecha.getValue(),
                     total.getText().strip(),
                     getTableContent(trabajosTable),
                     getTableContent(detallesTable)
             );
             Stream.writeObject(presupuesto, savePath);
-        } else {
-            Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
+            Dialog.showMessageDialog(Alert.AlertType.INFORMATION, "Datos guardados con éxito", "Información");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Dialog.showMessageDialog(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
         }
     }
 
     @FXML
     protected void cargarAP() {
-        File f = Utilities.showFileChooserDialog("Cargar..", new File("/home/german"));
+        File selectedFile = Dialog.showFileChooserDialog("Cargar..", new File("/home/german"));
 
-        if (f != null) {
-            Budget bud = (Budget) Stream.readObject(f.getPath());
-            System.out.println(bud);
+        if (selectedFile != null) {
+            loadBudget(selectedFile);
         } else {
-            Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error durante la generación del archivo PDF\nSi el mismo persiste contactar al servicio de ayuda", "Error");
+            Dialog.showMessageDialog(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
         }
+    }
+
+    private void loadBudget(File file) {
+        try {
+            Budget bud = (Budget) Stream.readObject(file.getPath());
+            fillEntries(bud);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Dialog.showMessageDialog(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
+        }
+    }
+
+    private void fillEntries(Budget budget) {
+        cliente.setText(budget.getCliente());
+        fecha.setValue(budget.getFecha());
+        total.setText(budget.getTotal());
+        setTableContent(trabajosTable, budget.getTrabajos());
+        setTableContent(detallesTable, budget.getDetalles());
     }
 
     @FXML
     protected void guardarGenerarAP() {
         guardarAP();
-        String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pdf";
 
-        try {
-            createFileIfAllFieldsCompleted(savePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error durante la generación del archivo PDF\nSi el mismo persiste contactar al servicio de ayuda", "Error");
+        if (allFieldsCompleted()) {
+            String filePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pdf";
+            generatePDFDocument(filePath);
+        } else {
+            Dialog.showMessageDialog(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
         }
     }
 
-    private void createFileIfAllFieldsCompleted(String savePath) throws DocumentException, IOException {
-        if (allFieldsCompleted()) {
-            PDFDocument pdf = new PDFDocument(savePath);
+    private void generatePDFDocument(String filePath) {
+        try {
+            PDFDocument pdf = new PDFDocument(filePath);
             pdf.createBudget(
                     new Img(MainApplication.class.getResource("MarceloDiaz.png").getPath()).getImg(),
                     new MainTable(
@@ -105,9 +126,10 @@ public class MainApplicationController {
                             getTableContent(trabajosTable),
                             getTableContent(detallesTable))
             );
-            Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "PDF generado con éxito en " + savePath, "Información");
-        } else {
-            Utilities.showPopupMessage(Alert.AlertType.WARNING, "Faltan rellenar algunas entradas", "Advertencia");
+            Dialog.showMessageDialog(Alert.AlertType.INFORMATION, "PDF generado con éxito en " + filePath, "Información");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Dialog.showMessageDialog(Alert.AlertType.ERROR, "Ha ocurrido un error durante la generación del archivo PDF\nSi el mismo persiste contactar al servicio de ayuda", "Error");
         }
     }
 
@@ -119,20 +141,27 @@ public class MainApplicationController {
     }
 
     private String[] getTableContent(Pane table) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> content = new ArrayList<>();
 
-        for (int i = 0; i < table.getChildren().size(); i++) {
-            TextField tf = (TextField) table.getChildren().get(i);
+        table.getChildren().forEach(field -> {
+            TextField tf = (TextField) field;
             if (tf.getText() != null && !tf.getText().isBlank()) {
-                list.add(tf.getText().strip());
+                content.add(tf.getText().strip());
             }
-        }
+        });
 
-        return list.toArray(new String[] {});
+        return content.toArray(new String[] {});
+    }
+
+    private void setTableContent(Pane table, String[] content) {
+        for (int i = 0; i < content.length; i++) {
+            ((TextField) table.getChildren().get(i)).setText(content[i]);
+        }
     }
 
     @FXML
     protected void colorAP() {
+        //TODO: escribir función para el menu item color
         System.out.println("TODO: escribir función para el menu item color");
     }
 }

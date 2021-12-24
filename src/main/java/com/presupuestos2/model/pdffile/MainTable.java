@@ -7,8 +7,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 
 public class MainTable extends PdfPTable {
 
-    private PdfPCell content;
-    final private Font FONT = FontFactory.getFont(Font.FontFamily.HELVETICA.name(), 14, Font.NORMAL);
+    final private PdfPCell content;
+    final private Font FONT = FontFactory.getFont(Font.FontFamily.HELVETICA.name(), 14, Font.UNDERLINE);
     final private int SPACING = 8;
 
     public MainTable(
@@ -24,16 +24,18 @@ public class MainTable extends PdfPTable {
         setWidthPercentage(85);
 
         content = new PdfPCell();
+
         content.addElement(new Text("Presupuesto", FONT.getFamilyname(), (int) FONT.getSize() + 2, Font.UNDERLINE, SPACING, ALIGN_CENTER));
-        content.addElement(new InputText("Cliente", cliente, FONT.getFamilyname(), (int) FONT.getSize(), SPACING));
-        content.addElement(new InputText("Fecha", fecha, FONT.getFamilyname(), (int) FONT.getSize(), SPACING));
-        content.addElement(new Text("Trabajos:", FONT.getFamilyname(), (int) FONT.getSize(), Font.UNDERLINE, SPACING, ALIGN_LEFT));
+        content.addElement(new InputText("Cliente", cliente, FONT, SPACING));
+        content.addElement(new InputText("Fecha", fecha, FONT, SPACING));
+        content.addElement(new Text("Trabajos:", FONT, SPACING, ALIGN_LEFT));
         addList(trabajos);
         if (!(detalles.length == 0)) {
-            content.addElement(new Text("Detalles:", FONT.getFamilyname(), (int) FONT.getSize(), Font.UNDERLINE, SPACING, ALIGN_LEFT));
+            content.addElement(new Text("Detalles:", FONT, SPACING, ALIGN_LEFT));
             addList(detalles);
         }
-        content.addElement(new InputText("TOTAL PRESUPUESTO", total, FONT.getFamilyname(), (int) FONT.getSize() + 2, SPACING + 7));
+        content.addElement(new InputText("TOTAL PRESUPUESTO", "$" + total, FONT, SPACING + 10));
+
         addCell(content);
     }
 

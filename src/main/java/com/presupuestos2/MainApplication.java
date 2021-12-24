@@ -1,6 +1,6 @@
 package com.presupuestos2;
 
-import com.presupuestos2.model.other.Utilities;
+import com.presupuestos2.model.other.Dialog;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +13,14 @@ public class MainApplication extends Application {
 
     static private String savePath = System.getProperty("user.home");
 
+    static public void setSavePath(String savePath) {
+        MainApplication.savePath = savePath;
+    }
+
+    static public String getSavePath() {
+        return savePath;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
@@ -21,21 +29,13 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.setOnCloseRequest(e -> {
             e.consume();
-            Utilities.showConfirmDialog("Deseas salir?", "Salir", response -> {
+            Dialog.showConfirmDialog("Deseas salir?", "Salir", response -> {
                 if (response == ButtonType.OK) {
                     stage.close();
                 }
             });
         });
         stage.show();
-    }
-
-    static public void setSavePath(String savePath) {
-        MainApplication.savePath = savePath;
-    }
-
-    static public String getSavePath() {
-        return savePath;
     }
 
     public static void main(String[] args) {

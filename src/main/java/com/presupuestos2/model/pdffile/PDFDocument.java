@@ -8,7 +8,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-
 public class PDFDocument extends Document {
 
     public PDFDocument(String savePath) throws FileNotFoundException, DocumentException {
