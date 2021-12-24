@@ -42,7 +42,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <GridPane prefHeight="149.0" prefWidth="780.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane prefHeight="150.0" prefWidth="762.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="0.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.5999755859375" minWidth="10.0" prefWidth="142.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="638.0" />

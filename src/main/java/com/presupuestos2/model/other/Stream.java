@@ -1,8 +1,5 @@
 package com.presupuestos2.model.other;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.scene.control.Alert;
 
 import java.io.*;

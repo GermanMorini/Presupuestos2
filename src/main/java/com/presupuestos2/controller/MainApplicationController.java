@@ -14,10 +14,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -36,11 +35,9 @@ public class MainApplicationController {
 
     @FXML
     protected void elegirDestinoAP() {
-        DirectoryChooser dc = new DirectoryChooser();
-        dc.setTitle("Selección de destino");
-        File f;
+        File f = Utilities.showDirectoryChooserDialog("Guardar en..");
 
-        if ((f = dc.showDialog(null)) != null) {
+        if (f != null) {
             MainApplication.setSavePath(f.getPath());
             Utilities.showPopupMessage(Alert.AlertType.INFORMATION, "El nuevo destino es " + f.getPath(), "Información");
         } else {
@@ -50,12 +47,14 @@ public class MainApplicationController {
 
     @FXML
     protected void guardarAP() {
-        saveBudgetInfoIfAllFieldsCompleted();
+        saveBudgetIfAllFieldsCompleted();
     }
 
-    private void saveBudgetInfoIfAllFieldsCompleted() {
+    private void saveBudgetIfAllFieldsCompleted() {
         if (allFieldsCompleted()) {
-            String savePath = MainApplication.getSavePath() + File.separator + cliente.getText().strip() + ".pspto";
+            //TODO: crear directorio 'guardados'
+            //String savePath = getClass().getProtectionDomain().getCodeSource().getLocation() + File.separator + "Guardados" + File.separator + cliente.getText().strip() + ".pspto";
+            String savePath = "/home/german/" + cliente.getText().strip() + ".pspto";
             Budget presupuesto = new Budget(
                     cliente.getText().strip(),
                     fecha.getValue().format(DateTimeFormatter.ofPattern("d/M/y")),
@@ -71,8 +70,14 @@ public class MainApplicationController {
 
     @FXML
     protected void cargarAP() {
-        // TODO: añadir funcionalidad
-        //Budget presupuesto = Stream.readObject();
+        File f = Utilities.showFileChooserDialog("Cargar..", new File("/home/german"));
+
+        if (f != null) {
+            Budget bud = (Budget) Stream.readObject(f.getPath());
+            System.out.println(bud);
+        } else {
+            Utilities.showPopupMessage(Alert.AlertType.ERROR, "Ha ocurrido un error durante la generación del archivo PDF\nSi el mismo persiste contactar al servicio de ayuda", "Error");
+        }
     }
 
     @FXML
@@ -88,7 +93,7 @@ public class MainApplicationController {
         }
     }
 
-    private void createFileIfAllFieldsCompleted(String savePath) throws DocumentException, FileNotFoundException {
+    private void createFileIfAllFieldsCompleted(String savePath) throws DocumentException, IOException {
         if (allFieldsCompleted()) {
             PDFDocument pdf = new PDFDocument(savePath);
             pdf.createBudget(
