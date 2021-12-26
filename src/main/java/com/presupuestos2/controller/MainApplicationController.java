@@ -76,12 +76,7 @@ public class MainApplicationController {
     @FXML
     protected void cargarAP() {
         File selectedFile = Dialog.showFileChooserDialog("Cargar..", new File("/home/german"));
-
-        if (selectedFile != null) {
-            loadBudget(selectedFile);
-        } else {
-            Dialog.showMessageDialog(Alert.AlertType.ERROR, "Ha ocurrido un error. Si el mismo persiste contactar al servicio de ayuda", "Error");
-        }
+        loadBudget(selectedFile);
     }
 
     private void loadBudget(File file) {
@@ -157,6 +152,24 @@ public class MainApplicationController {
         for (int i = 0; i < content.length; i++) {
             ((TextField) table.getChildren().get(i)).setText(content[i]);
         }
+    }
+
+    @FXML
+    protected void borrarTodoAP() {
+        Dialog.showConfirmDialog("Deseas borrar todas las entradas?", "Advertencia", response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                cliente.setText("");
+                total.setText("");
+                clearTable(trabajosTable);
+                clearTable(detallesTable);
+            }
+        });
+    }
+
+    private void clearTable(Pane table) {
+        table.getChildren().forEach(field -> {
+            ((TextField) field).setText("");
+        });
     }
 
     @FXML
