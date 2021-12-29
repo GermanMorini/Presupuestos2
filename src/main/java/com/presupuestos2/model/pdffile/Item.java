@@ -6,6 +6,15 @@ import com.itextpdf.text.Paragraph;
 
 public class Item extends Paragraph {
 
+    public Item(String text, Font font, int spacing, char symbol) {
+        setSpacingBefore(spacing / 4);
+        setSpacingAfter(spacing / 4);
+        setIndentationLeft(40);
+        setFont(FontFactory.getFont(font.getFamilyname(), font.getSize(), Font.NORMAL));
+        add(symbol + " ");
+        add(text);
+    }
+
     public Item(String text, String font, int size, int spacing, char symbol) {
         setSpacingBefore(spacing / 4);
         setSpacingAfter(spacing / 4);
